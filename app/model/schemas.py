@@ -11,3 +11,4 @@ class TranslateBase(BaseModel):
     
 class TranslateCreate(TranslateBase):
     mt: str = "Watch me bring the fire and set the night alight"
+    

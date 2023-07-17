@@ -2,9 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes.translate import router as translate_router
+from app.routes.history import router as history_router
 
-from app.model.database import SessionLocal, engine
-from app.model import models
 
 
 # Allows CORS middleware
@@ -37,3 +36,4 @@ async def root():
 # Add translate router to FastAPI instance using 'include_router' method
 # To access from outside
 app.include_router(translate_router, prefix="/translate")
+app.include_router(history_router, prefix="/history")

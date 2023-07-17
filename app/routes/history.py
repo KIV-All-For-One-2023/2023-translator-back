@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Path, HTTPException, status, Depends
-from app.service import translate
+from app.service import history
 from app.model import schemas
 
 
@@ -11,6 +11,6 @@ router = APIRouter()
 
 
 @router.get("/")
-async def translate_text(params: schemas.TranslateCreate = Depends()) -> dict:
-    mt = await translate.translate_text(params)
+async def get_history(params: schemas.TranslateCreate = Depends()) -> dict:
+    mt = await history.translate_text(params)
     return {"translated": mt}
