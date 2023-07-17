@@ -759,3 +759,7 @@ _참고파일_/
 
 # python
 __pycache__
+
+# model
+*.pt
+*.bin
