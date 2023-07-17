@@ -1,16 +1,30 @@
 from fastapi import APIRouter, Path, HTTPException, status, Depends
 from app.service import history
-from app.model import schemas
+from app.model import schemas, models
 
+from sqlalchemy.orm import Session
+
+from app.model.database import MysqlSession, engine
+from app.model.models import Base
+
+Base.metadata.create_all(bind=engine)
 
 # Create routing method
 router = APIRouter()
 
-# Query parameter
-# https://translate.google.com/?sl=ko&tl=en&text=내 안의 불꽃들로 이 밤을 찬란히 밝히는 걸 지켜봐&op=translate
+# Dependency
 
 
-@router.get("/")
-async def get_history(params: schemas.TranslateCreate = Depends()) -> dict:
-    mt = await history.translate_text(params)
-    return {"translated": mt}
+def get_db():
+    db = MysqlSession()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@router.get("/", response_model=list[schemas.Translate])
+# @router.get("/")
+async def read_history(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    histories = await history.get_history(db, skip=skip, limit=limit)
+    return histories

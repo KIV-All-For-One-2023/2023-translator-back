@@ -3,12 +3,26 @@
 # 이러한 Pydantic 모델은 "스키마"(유효한 데이터 모양)를 어느 정도 정의합니다.
 
 from pydantic import BaseModel
+from datetime import datetime
+
 
 class TranslateBase(BaseModel):
-    sl : str = "ko"
-    tl : str = "en"
-    text : str = "내 안의 불꽃들로 이 밤을 찬란히 밝히는 걸 지켜봐"
-    
+    sl: str = "ko"
+    tl: str = "en"
+    text: str = "내 안의 불꽃들로 이 밤을 찬란히 밝히는 걸 지켜봐"
+
+
 class TranslateCreate(TranslateBase):
     mt: str = "Watch me bring the fire and set the night alight"
-    
+
+
+class Translate(BaseModel):
+    id: int
+    src_lang: str
+    src_text: str
+    tgt_lang: str
+    mt_text: str
+    created_at: datetime
+
+    class Config:
+        orm_mode = True

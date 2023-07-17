@@ -5,13 +5,14 @@ from . import models, schemas
 
 from app.model.database import MysqlSession
 
+
 async def create_translate(translate: schemas.TranslateCreate):
     # SQLAlchemy 모델 인스턴스를 만들고 데이터를 넣습니다.
     query = models.Translate(src_lang=translate.sl,
-                                    src_text=translate.text,
-                                    tgt_lang=translate.tl,
-                                    mt_text=translate.mt
-                                    )
+                             src_text=translate.text,
+                             tgt_lang=translate.tl,
+                             mt_text=translate.mt
+                             )
     try:
         # db 세션 지정
         db = MysqlSession()
@@ -24,3 +25,7 @@ async def create_translate(translate: schemas.TranslateCreate):
     except exc.OperationalError:
         db.rollback()
         raise
+
+
+async def get_history(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Translate).offset(skip).limit(limit).all()
