@@ -763,3 +763,4 @@ __pycache__
 # model
 *.pt
 *.bin
+.model/

@@ -1,9 +1,11 @@
+"""
+main
+"""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes.translate import router as translate_router
-from app.routes.history import router as history_router
-
+from .app.route.translate import router as translate_router
+from .app.route.history import router as history_router
 
 
 # Allows CORS middleware
@@ -17,9 +19,6 @@ app = FastAPI(title="NMT-API",
 
 
 # Setting Middleware
-# Tip : https://hides.kr/1107
-# https://github.com/tiangolo/fastapi/issues/5071 깃헙 이슈에 따르면 해당 메소드의 경우 호출할 때 마다 미들웨어를 re-initialize하는 이슈가 있다고 한다.
-# 따라서 Middleware클래스를 활용하여 넣어주는 방식으로 변경하는 게 좋다
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -31,6 +30,9 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
+    """
+    root (health check)
+    """
     return {"message": "Hello World"}
 
 # Add translate router to FastAPI instance using 'include_router' method
