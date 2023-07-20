@@ -1,7 +1,7 @@
 """
 Translate a string
 """
-from ..model.mysql import crud
+from app.model.mysql import crud
 import ctranslate2
 import sentencepiece as spm
 
