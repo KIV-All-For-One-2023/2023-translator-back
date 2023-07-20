@@ -1,9 +1,9 @@
 """
 Translate a string
 """
-from app.model.mysql import crud
-# import ctranslate2
-# import sentencepiece as spm
+from ..model.mysql import crud
+import ctranslate2
+import sentencepiece as spm
 
 
 async def translate_text(params) -> str:
