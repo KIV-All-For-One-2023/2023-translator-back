@@ -1,15 +1,15 @@
-from fastapi import Depends, FastAPI, HTTPException
-from sqlalchemy.orm import Session
-
-from app.model import crud, models, schemas
-
-import requests
-
-import ctranslate2
-import sentencepiece as spm
+"""
+Translate a string
+"""
+from app.model.mysql import crud
+# import ctranslate2
+# import sentencepiece as spm
 
 
 async def translate_text(params) -> str:
+    """
+    Translate a string & Save to DB
+    """
     # MT 모델 서빙 (추후 torchserve 추가 예정.)
     # NMT_URL = f"http://0.0.0.0:8000/predictions/{params.sl}-{params.tl}"
 
@@ -19,19 +19,23 @@ async def translate_text(params) -> str:
     # if response.status_code != 200:
     #     return False
 
-    mt = await ctranslate(params)
-    setattr(params, 'mt', mt)
+    mt_text = await ctranslate(params)
+    setattr(params, 'mt_text', mt_text)
 
     # 코드리뷰 요청
     # DB에 저장
     # 번역결과 리턴과 DB 저장을 동시에 하려면? 이미 비동기 적용했으니 상관없나?
     await crud.create_translate(params)
 
-    return mt
+    return mt_text
 
 
 async def ctranslate(params) -> str:
-
+    """
+    Translate a string
+    - Tokenize using SentencePiece
+    - Translate using CTranslate format model
+    """
     translator = ctranslate2.Translator(
         f"nmt/model/bin/{params.sl}-{params.tl}", device="cpu")
     sp_sl = spm.SentencePieceProcessor(

@@ -1,10 +1,5 @@
-from fastapi import Depends, FastAPI, HTTPException
-from sqlalchemy.orm import Session
-
-from app.model import crud, models, schemas
-
-import requests
+from app.model.mysql import crud
 
 
-async def get_history(db: Session, skip: int = 0, limit: int = 100):
-    return await crud.get_history(db=db, skip=skip, limit=limit)
+async def get_history(skip: int = 0, limit: int = 100):
+    return await crud.get_history(skip=skip, limit=limit)

@@ -13,7 +13,7 @@ class TranslateBase(BaseModel):
 
 
 class TranslateCreate(TranslateBase):
-    mt: str = "Watch me bring the fire and set the night alight"
+    mt_text: str = "Watch me bring the fire and set the night alight"
 
 
 class Translate(BaseModel):
@@ -23,6 +23,3 @@ class Translate(BaseModel):
     tgt_lang: str
     mt_text: str
     created_at: datetime
-
-    class Config:
-        orm_mode = True

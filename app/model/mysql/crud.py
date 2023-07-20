@@ -1,9 +1,11 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import exc
+from fastapi import Depends
 
-from . import models, schemas
+from .. import schemas
 
-from app.model.database import MysqlSession
+from . import MYSQL_SESSION, models
+db = MYSQL_SESSION()
 
 
 async def create_translate(translate: schemas.TranslateCreate):
@@ -15,7 +17,6 @@ async def create_translate(translate: schemas.TranslateCreate):
                              )
     try:
         # db 세션 지정
-        db = MysqlSession()
         db.add(query)
         db.commit()
         db.refresh(query)
@@ -25,7 +26,9 @@ async def create_translate(translate: schemas.TranslateCreate):
     except exc.OperationalError:
         db.rollback()
         raise
+    finally:
+        db.close()
 
 
-async def get_history(db: Session, skip: int = 0, limit: int = 100):
+async def get_history(skip: int = 0, limit: int = 100):
     return db.query(models.Translate).offset(skip).limit(limit).all()

@@ -1,6 +1,9 @@
-from fastapi import APIRouter, Path, HTTPException, status, Depends
-from app.service import translate
-from app.model import schemas
+"""
+Router for translate
+"""
+from fastapi import APIRouter, Depends
+from ..service import translate
+from ..model import schemas
 
 
 # Create routing method
@@ -12,5 +15,8 @@ router = APIRouter()
 
 @router.get("/")
 async def translate_text(params: schemas.TranslateCreate = Depends()) -> dict:
-    mt = await translate.translate_text(params)
-    return {"translated": mt}
+    """
+    get machine translated text
+    """
+    mt_text = await translate.translate_text(params)
+    return {"translated": mt_text}
