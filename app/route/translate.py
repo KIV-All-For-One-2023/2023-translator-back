@@ -2,8 +2,8 @@
 Router for translate
 """
 from fastapi import APIRouter, Depends
-from ..service import translate
-from ..model import schemas
+from app.service import translate
+from app.model import schemas
 
 
 # Create routing method
@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.get("/")
-async def translate_text(params: schemas.TranslateCreate = Depends()) -> dict:
+async def translate_text(params: schemas.TranslateBase = Depends()) -> dict:
     """
     get machine translated text
     """

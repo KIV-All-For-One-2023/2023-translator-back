@@ -14,7 +14,6 @@ pymysql = "^1.1.0"
 ctranslate2 = "^3.16.1"
 opennmt-py = "^2.0"
 sentencepiece = "^0.1.99"
-pylint = "^2.17.4"
 
 
 [build-system]

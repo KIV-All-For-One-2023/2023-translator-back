@@ -1,15 +1,18 @@
+"""
+SQLAlchemy model for MySQL
+"""
 from sqlalchemy import Column, Integer, TEXT, VARCHAR, TIMESTAMP
 from sqlalchemy.sql import func
 
 from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
-# ( 위의 파일 ) Base에서 가져옵니다 .databasedatabase.py
-# 이를 상속하는 클래스를 만듭니다.
-# SQLAlchemy 모델 클래스
-
 
 class Translate(Base):
+    """_summary_
+    Args:
+        Base (_type_): _description_
+    """
     __tablename__ = "translate"
 
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)

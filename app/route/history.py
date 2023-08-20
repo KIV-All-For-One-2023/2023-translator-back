@@ -1,9 +1,9 @@
 """
-Router for inquiry translation history inquiry
+Router for inquiry translation history
 """
 from fastapi import APIRouter
-from ..service import history
-from ..model import schemas
+from app.service import history
+from app.model import schemas
 
 # Create routing method
 router = APIRouter()

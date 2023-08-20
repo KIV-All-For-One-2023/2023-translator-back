@@ -4,8 +4,8 @@ main
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .app.route.translate import router as translate_router
-from .app.route.history import router as history_router
+from app.route.translate import router as translate_router
+from app.route.history import router as history_router
 
 
 # Allows CORS middleware
